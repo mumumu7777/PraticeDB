@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using demo2.Models.DTOs;
 using System.Data.Entity.Migrations;
 using System.Runtime.Remoting.Contexts;
+using Microsoft.Ajax.Utilities;
 
 namespace demo2.Controllers
 {
@@ -68,21 +69,71 @@ namespace demo2.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult CreateStudent(/*int id , string name , string gender*/ )
+
+        public ActionResult CreateStudent(string name, string gender, int classid)
         {
-            var student = _PraticeDb.Student.First(x => x.id == 1);
-
-
-
-
-
-            return View(student) ;  
+            var student = _PraticeDb.Student;
+            var addData = new Student() { 姓名 = name, 性別 = gender, 班級 = classid };
+            student.Add(addData);
+            return View() ;  
         }
 
+        public ActionResult DeleteClass(int classID)
+        {
+            var classes = _PraticeDb.Class.First(x=>x.id==classID);
+            _PraticeDb.Class.Remove(classes);
+            _PraticeDb.SaveChanges();
+            return View();
+        }
+
+        public ActionResult AddAllScore()
+        {
+            //foreach
+
+            return View();
+        }
+
+        public ActionResult PlusSpecScore(int plusscore)
+        {
+            int q = 123;
+
+            i
+
+            var scores = _PraticeDb.Score.Select(x => x.Score1).ToList();
+
+            foreach (int score in scores)
+
+            {
+                switch (score)
+                {
+
+                    case int scorevalue when (scorevalue < 60):
+                        ; scores[]=60 ;
+
+                        break;
 
 
-        //public IEnumerable<>
+
+
+                };
+
+
+            }
+
+         
+
+
+
+
+
+
+
+            
+        }
+
+        
+
+        
 
 
 
