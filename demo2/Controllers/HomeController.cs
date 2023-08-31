@@ -31,45 +31,25 @@ namespace demo2.Controllers
             return View();
         }
 
-        public ActionResult UpdateScore(int studentid, string subject, int score)
-        {
-
-            try
-            {
-
-                //switch{ }
-
-                var studentscore = _PraticeDb.Score.First(x => x.StudentId == studentid && x.Subject == subject);
-
-                studentscore.Score1 = score;
-
-                //if ()
-                //{
-                    
-                //}
-                if (studentscore == null)
-                {
-                    throw new Exception("資料有誤");
-                }
+        //public ActionResult UpdateScore(int studentid, string subject, int score)
+        //{
+        //    try
+        //    {               
+        //        var studentscore = _PraticeDb.Score.First(x => x.StudentId == studentid && x.Subject == subject);
+        //        studentscore.Score1 = score;
                 
-                _PraticeDb.SaveChanges();
-
-                return View();
-            }
-
-            catch (Exception ex)
-            {
-
-                return View();
-
-            }
-
-
-
-        }
-
-
-
+        //        if (studentscore == null)
+        //        {
+        //            throw new Exception("資料有誤");
+        //        }                
+        //        _PraticeDb.SaveChanges();
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return View();
+        //    }
+        //}
         public ActionResult CreateStudent(string name, string gender, int classid)
         {
             var student = _PraticeDb.Student;
@@ -78,57 +58,52 @@ namespace demo2.Controllers
             return View() ;  
         }
 
+        [HttpPost]
         public ActionResult DeleteClass(int classID)
         {
-            var classes = _PraticeDb.Class.First(x=>x.id==classID);
-            _PraticeDb.Class.Remove(classes);
-            _PraticeDb.SaveChanges();
-            return View();
-        }
+            try
+            {
+                
 
+                if (classID==null) { }
+
+
+
+                var classes = _PraticeDb.Class.First(x => x.id == classID);
+                _PraticeDb.Class.Remove(classes);
+                _PraticeDb.SaveChanges();
+                return Json("ok");
+            }
+            catch (Exception ex) {
+                return Json("ERROR");
+            };
+           
+        }
+        [HttpPost]
         public ActionResult AddAllScore()
         {
             //foreach
 
-            return View();
+            return Json(null);
         }
 
-        public ActionResult PlusSpecScore(int plusscore)
+        public ActionResult AddToPassScore()
         {
-            int q = 123;
-
-            i
-
+            int index = 0;         
             var scores = _PraticeDb.Score.Select(x => x.Score1).ToList();
-
             foreach (int score in scores)
-
-            {
+            {                                     
+                //if (score<60) { scores[index] = 60; continue; index++; }
                 switch (score)
                 {
-
-                    case int scorevalue when (scorevalue < 60):
-                        ; scores[]=60 ;
-
+                    case int scorecase when (scorecase <60):
+                        scores[index] = 60;                      
                         break;
-
-
-
-
                 };
-
-
+                index++;
             }
-
-         
-
-
-
-
-
-
-
-            
+            _PraticeDb.SaveChanges();
+            return View();                
         }
 
         
